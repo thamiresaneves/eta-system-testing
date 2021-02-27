@@ -1,19 +1,41 @@
 package system;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import static system.helpers.Constants.CHROME_DRIVER_PATH;
+import system.helpers.DriverManager;
 
 public class Main {
 
-    public static void main(String [] args) {
-        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
-        System.setProperty("webdriver.chrome.silentOutput", "true");
+    WebDriver driver;
 
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.cesar.school");
+    @BeforeEach
+    public void setUp() {
+        driver = DriverManager.getDriver();
+        driver.get("https://www.cesar.school/");
+    }
+
+    @Test
+    public void cesarSchool_visit() {
+        DriverManager.endSession();
+    }
+
+    @Test
+    public void cesarSchool_goToEndPage() {
+        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.END);
+    }
+
+    public static void main(String [] args) {
+        WebDriver driver = DriverManager.getDriver();
+
+        driver.get("https://www.cesar.school/");
         driver.manage().window().maximize();
-        driver.quit();
+        driver.navigate().to("https://www.cesar.school/graduacao/");
+        driver.navigate().back();
+        driver.navigate().refresh();
+
+        DriverManager.endSession();
     }
 }
