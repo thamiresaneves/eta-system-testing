@@ -7,6 +7,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import system.helpers.DriverManager;
 
+import java.util.concurrent.TimeUnit;
+
 public class Main {
 
     WebDriver driver;
@@ -30,8 +32,10 @@ public class Main {
     public static void main(String [] args) {
         WebDriver driver = DriverManager.getDriver();
 
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //Works for searches
         driver.get("https://www.cesar.school/");
         driver.manage().window().maximize();
+
         driver.navigate().to("https://www.cesar.school/graduacao/");
         driver.navigate().back();
         driver.navigate().refresh();
